@@ -1,0 +1,2 @@
+CREATE USER 'zbx_monitor'@'localhost' IDENTIFIED BY 'zabbixM0nit0R2019!';
+GRANT USAGE,REPLICATION CLIENT,PROCESS,SHOW DATABASES,SHOW VIEW ON *.* TO 'zbx_monitor'@'localhost';

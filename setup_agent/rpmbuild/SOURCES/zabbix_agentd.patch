@@ -1,0 +1,93 @@
+diff -uNrp zabbix-4.4.4/conf/zabbix_agentd.conf zabbix-4.4.4.patch/conf/zabbix_agentd.conf
+--- zabbix-4.4.4/conf/zabbix_agentd.conf	2019-12-19 09:46:14.000000000 +0100
++++ zabbix-4.4.4.patch/conf/zabbix_agentd.conf	2020-02-18 16:18:46.227121593 +0100
+@@ -8,7 +8,7 @@
+ #
+ # Mandatory: no
+ # Default:
+-# PidFile=/tmp/zabbix_agentd.pid
++PidFile=/srv/zabbix-agent-custom/run/zabbix_agentd_custom.pid
+ 
+ ### Option: LogType
+ #	Specifies where log messages are written to:
+@@ -27,7 +27,7 @@
+ # Default:
+ # LogFile=
+ 
+-LogFile=/tmp/zabbix_agentd.log
++LogFile=/var/log/zabbix/zabbix_agentd_custom.log
+ 
+ ### Option: LogFileSize
+ #	Maximum size of log file in MB.
+@@ -50,7 +50,7 @@ LogFile=/tmp/zabbix_agentd.log
+ # Mandatory: no
+ # Range: 0-5
+ # Default:
+-# DebugLevel=3
++#DebugLevel=5
+ 
+ ### Option: SourceIP
+ #	Source IP address for outgoing connections.
+@@ -66,7 +66,7 @@ LogFile=/tmp/zabbix_agentd.log
+ #
+ # Mandatory: no
+ # Default:
+-# EnableRemoteCommands=0
++EnableRemoteCommands=1
+ 
+ ### Option: LogRemoteCommands
+ #	Enable logging of executed shell commands as warnings.
+@@ -91,7 +91,7 @@ LogFile=/tmp/zabbix_agentd.log
+ # Default:
+ # Server=
+ 
+-Server=127.0.0.1
++Server=zabbix.mysafezone.fr
+ 
+ ### Option: ListenPort
+ #	Agent will listen on this port for connections from the server.
+@@ -99,7 +99,7 @@ Server=127.0.0.1
+ # Mandatory: no
+ # Range: 1024-32767
+ # Default:
+-# ListenPort=10050
++ListenPort=10060
+ 
+ ### Option: ListenIP
+ #	List of comma delimited IP addresses that the agent should listen on.
+@@ -132,7 +132,7 @@ Server=127.0.0.1
+ # Default:
+ # ServerActive=
+ 
+-ServerActive=127.0.0.1
++ServerActive=zabbix.mysafezone.fr
+ 
+ ### Option: Hostname
+ #	Unique, case sensitive hostname.
+@@ -142,8 +142,7 @@ ServerActive=127.0.0.1
+ # Mandatory: no
+ # Default:
+ # Hostname=
+-
+-Hostname=Zabbix server
++Hostname=#HOSTNAME#
+ 
+ ### Option: HostnameItem
+ #	Item used for generating Hostname if it is undefined. Ignored if Hostname is defined.
+@@ -162,7 +161,7 @@ Hostname=Zabbix server
+ # Mandatory: no
+ # Range: 0-255 characters
+ # Default:
+-# HostMetadata=
++HostMetadata=Linux
+ 
+ ### Option: HostMetadataItem
+ #	Optional parameter that defines an item used for getting host metadata.
+@@ -286,6 +285,7 @@ Hostname=Zabbix server
+ # Include=/usr/local/etc/zabbix_agentd.userparams.conf
+ # Include=/usr/local/etc/zabbix_agentd.conf.d/
+ # Include=/usr/local/etc/zabbix_agentd.conf.d/*.conf
++Include=/srv/zabbix-agent-custom/etc/zabbix_agentd.conf.d/*.conf
+ 
+ ####### USER-DEFINED MONITORED PARAMETERS #######
+ 

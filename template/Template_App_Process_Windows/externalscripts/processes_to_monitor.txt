@@ -1,0 +1,4 @@
+zabbix_agentd
+oracle
+flexnetprintspooler
+FlexNetKernel

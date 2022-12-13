@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-04T15:37:24Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template Module Socket Windows</template>
+            <name>Template Module Socket Windows</name>
+            <description>TCP socket states and connection stats via netstat command on Windows</description>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>NETWORK SOCKET</name>
+                </application>
+                <application>
+                    <name>TCP SOCKET</name>
+                </application>
+                <application>
+                    <name>UDP SOCKET</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>List of TCP sockets in a LISTENING state</name>
+                    <key>sockstat.tcp.allocated</key>
+                    <history>1d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Number of TCP sockets in a LISTENING state</name>
+                    <key>sockstat.tcp.allocated.count</key>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>List of TCP sockets in a ESTABLISHED state</name>
+                    <key>sockstat.tcp.inuse</key>
+                    <history>1d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Number of TCP sockets in a ESTABLISHED state</name>
+                    <key>sockstat.tcp.inuse.count</key>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>List of TCP sockets in a CLOSE_WAIT state</name>
+                    <key>sockstat.tcp.orphan</key>
+                    <history>1d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Number of TCP sockets in a CLOSE_WAIT state</name>
+                    <key>sockstat.tcp.orphan.count</key>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total number of TCP sockets</name>
+                    <key>sockstat.tcp.sockets</key>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>List of TCP sockets in a TIME_WAIT state</name>
+                    <key>sockstat.tcp.timewait</key>
+                    <history>1d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Number of TCP sockets in a TIME_WAIT state</name>
+                    <key>sockstat.tcp.timewait.count</key>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>TCP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>List of UDP sockets</name>
+                    <key>sockstat.udp.inuse</key>
+                    <history>1d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>UDP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total number of UDP sockets</name>
+                    <key>sockstat.udp.inuse.count</key>
+                    <applications>
+                        <application>
+                            <name>NETWORK SOCKET</name>
+                        </application>
+                        <application>
+                            <name>UDP SOCKET</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <name>TCP sockets</name>
+            <show_work_period>NO</show_work_period>
+            <show_triggers>NO</show_triggers>
+            <type>STACKED</type>
+            <ymax_type_1>ITEM</ymax_type_1>
+            <ymax_item_1>
+                <host>Template Module Socket Windows</host>
+                <key>sockstat.tcp.sockets</key>
+            </ymax_item_1>
+            <graph_items>
+                <graph_item>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>FB8C00</color>
+                    <item>
+                        <host>Template Module Socket Windows</host>
+                        <key>sockstat.tcp.orphan.count</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>43A047</color>
+                    <item>
+                        <host>Template Module Socket Windows</host>
+                        <key>sockstat.tcp.inuse.count</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template Module Socket Windows</host>
+                        <key>sockstat.tcp.allocated.count</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>A54F10</color>
+                    <item>
+                        <host>Template Module Socket Windows</host>
+                        <key>sockstat.tcp.timewait.count</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>UDP sockets</name>
+            <type>STACKED</type>
+            <graph_items>
+                <graph_item>
+                    <color>F48FB1</color>
+                    <item>
+                        <host>Template Module Socket Windows</host>
+                        <key>sockstat.udp.inuse.count</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>
