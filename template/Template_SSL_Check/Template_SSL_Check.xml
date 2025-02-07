@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-04T15:29:40Z</date>
+    <groups>
+        <group>
+            <name>Templates/Applications</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template SSL Check</template>
+            <name>Template SSL Check</name>
+            <description>Please define a new macro {$WEBHOST} on your host to set the FQDN to check</description>
+            <groups>
+                <group>
+                    <name>Templates/Applications</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>SSL CHECK</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Discovery of certificate files to monitor</name>
+                    <key>ssl.certificate.discovery</key>
+                    <description>Discovery of the certificate files to check</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>SSL certificate expiry date : &quot;{#CERTIFICATE_FILE}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>ssl_check_cert_file[&quot;{#CERTIFICATE_FILE}&quot;]</key>
+                            <delay>1d</delay>
+                            <history>1d</history>
+                            <trends>1d</trends>
+                            <value_type>FLOAT</value_type>
+                            <applications>
+                                <application>
+                                    <name>SSL CHECK</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}=-1</expression>
+                                    <name>{#CERTIFICATE_FILE} - Certificate expired</name>
+                                    <priority>DISASTER</priority>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;15</expression>
+                                    <name>{#CERTIFICATE_FILE} - Certificate expires in {ITEM.VALUE} day(s)</name>
+                                    <priority>HIGH</priority>
+                                    <type>MULTIPLE</type>
+                                    <manual_close>YES</manual_close>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>{#CERTIFICATE_FILE} - Certificate expired</name>
+                                            <expression>{Template SSL Check:ssl_check_cert_file[&quot;{#CERTIFICATE_FILE}&quot;].last()}=-1</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;30</expression>
+                                    <name>{#CERTIFICATE_FILE} - Certificate expires in {ITEM.VALUE} day(s)</name>
+                                    <priority>AVERAGE</priority>
+                                    <manual_close>YES</manual_close>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>{#CERTIFICATE_FILE} - Certificate expires in {ITEM.VALUE} day(s)</name>
+                                            <expression>{Template SSL Check:ssl_check_cert_file[&quot;{#CERTIFICATE_FILE}&quot;].last()}&lt;15</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <lld_macro_paths>
+                        <lld_macro_path>
+                            <lld_macro>{#CERTIFICATE_FILE}</lld_macro>
+                            <path>$.CERTIFICATE_FILE</path>
+                        </lld_macro_path>
+                    </lld_macro_paths>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>Discovery of FQDNs to monitor</name>
+                    <key>ssl.fqdn.discovery</key>
+                    <description>Discovery of the FQDN to check</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>SSL certificate expiry date : &quot;{#FQDN}:{#PORT}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>ssl_check_cert_fqdn[&quot;{#FQDN}&quot;,&quot;{#PORT}&quot;]</key>
+                            <delay>1d</delay>
+                            <history>1d</history>
+                            <trends>1d</trends>
+                            <value_type>FLOAT</value_type>
+                            <applications>
+                                <application>
+                                    <name>SSL CHECK</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}=-1</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>{last()}&gt;30</recovery_expression>
+                                    <name>{#FQDN} - Certificate expired</name>
+                                    <url>https://{#FQDN}/</url>
+                                    <priority>DISASTER</priority>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;15</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>{last()}&gt;30</recovery_expression>
+                                    <name>{#FQDN} - Certificate expires in {ITEM.VALUE} day(s)</name>
+                                    <url>https://{#FQDN}/</url>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>{#FQDN} - Certificate expired</name>
+                                            <expression>{Template SSL Check:ssl_check_cert_fqdn[&quot;{#FQDN}&quot;,&quot;{#PORT}&quot;].last()}=-1</expression>
+                                            <recovery_expression>{Template SSL Check:ssl_check_cert_fqdn[&quot;{#FQDN}&quot;,&quot;{#PORT}&quot;].last()}&gt;30</recovery_expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;30</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>{last()}&gt;30</recovery_expression>
+                                    <name>{#FQDN} - Certificate expires in {ITEM.VALUE} day(s)</name>
+                                    <url>https://{#FQDN}/</url>
+                                    <priority>AVERAGE</priority>
+                                    <manual_close>YES</manual_close>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>{#FQDN} - Certificate expires in {ITEM.VALUE} day(s)</name>
+                                            <expression>{Template SSL Check:ssl_check_cert_fqdn[&quot;{#FQDN}&quot;,&quot;{#PORT}&quot;].last()}&lt;15</expression>
+                                            <recovery_expression>{Template SSL Check:ssl_check_cert_fqdn[&quot;{#FQDN}&quot;,&quot;{#PORT}&quot;].last()}&gt;30</recovery_expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{count(5m,0,eq)}=1</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>{count(5m,0,eq)}=0</recovery_expression>
+                                    <name>{#FQDN} - No data collected for this item</name>
+                                    <priority>HIGH</priority>
+                                    <description>No data collected for this item. &#13;
+Please check the error message in Zabbix for further information.</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>SSL certificate expiration date : &quot;{#FQDN}:{#PORT}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>ssl_check_cert_fqdn_expiration_date[&quot;{#FQDN}&quot;,&quot;{#PORT}&quot;]</key>
+                            <delay>2h</delay>
+                            <history>1d</history>
+                            <units>unixtime</units>
+                            <applications>
+                                <application>
+                                    <name>SSL CHECK</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{diff()}=1</expression>
+                                    <recovery_mode>NONE</recovery_mode>
+                                    <name>{#FQDN} - Certificate expiration date has changed</name>
+                                    <url>https://{#FQDN}:{#PORT}</url>
+                                    <priority>INFO</priority>
+                                    <description>Certificate expiration date has changed.&#13;
+Possible reasons that the certificate has been updated or replaced. Ack to close.</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <lld_macro_paths>
+                        <lld_macro_path>
+                            <lld_macro>{#FQDN}</lld_macro>
+                            <path>$.FQDN</path>
+                        </lld_macro_path>
+                        <lld_macro_path>
+                            <lld_macro>{#PORT}</lld_macro>
+                            <path>$.PORT</path>
+                        </lld_macro_path>
+                    </lld_macro_paths>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$CERT_PATH}</macro>
+                    <value>/usr/lib/zabbix/externalscripts/certs_to_check</value>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>

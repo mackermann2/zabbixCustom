@@ -1,0 +1,3 @@
+# Backup BORG
+0 23 * * * /product/scripts/borg-backup.sh /data/backup/borg/zabbix/ /var/www/html/zabbix/ /usr/local/bin/IDS/zabbix-agent/etc/ /etc/zabbix/ /usr/lib/zabbix/ /root/rpmbuild/
+5 23 * * * /product/scripts/borg-backup.sh /data/backup/borg/mysql/ /data/backup/mysql/

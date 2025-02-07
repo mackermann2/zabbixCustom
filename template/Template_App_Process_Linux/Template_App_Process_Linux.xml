@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-06-17T12:37:34Z</date>
+    <groups>
+        <group>
+            <name>Linux servers</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template App Process Linux</template>
+            <name>Template App Process Linux</name>
+            <groups>
+                <group>
+                    <name>Linux servers</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Linux Process CPU</name>
+                </application>
+                <application>
+                    <name>Linux Process IO</name>
+                </application>
+                <application>
+                    <name>Linux Process Memory</name>
+                </application>
+                <application>
+                    <name>Linux Process Network</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Linux Process Discovery</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>system.process.linux.discovery</key>
+                    <delay>15m</delay>
+                    <description>Discovery of processes to monitor</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Process - CPU consumption : &quot;{#PROCESSNAME}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>system.process.linux.cpu[{#PROCESSNAME},cpu]</key>
+                            <delay>3m</delay>
+                            <history>30d</history>
+                            <units>%</units>
+                            <description>Percent CPU used by a process</description>
+                            <applications>
+                                <application>
+                                    <name>Linux Process CPU</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Process - IO read_bytes: &quot;{#PROCESSNAME}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>system.process.linux.io_read_bytes[{#PROCESSNAME},io_read_bytes]</key>
+                            <delay>3m</delay>
+                            <units>B</units>
+                            <description>I/O counter: bytes read&#13;
+&#13;
+Attempt to count the number of bytes which this process really did cause to be fetched from the storage layer. Done at the submit_bio() level, so it is accurate for block-backed filesystems.&#13;
+&#13;
+Currently there is no information about network and distributed file systems like NFS, CIFS, GFS2, OCFS and such.</description>
+                            <applications>
+                                <application>
+                                    <name>Linux Process IO</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Process - IO syscr  : &quot;{#PROCESSNAME}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>system.process.linux.io_syscr[{#PROCESSNAME},io_syscr]</key>
+                            <delay>3m</delay>
+                            <description>Number of read I/O operations</description>
+                            <applications>
+                                <application>
+                                    <name>Linux Process IO</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Process - IO syscw : &quot;{#PROCESSNAME}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>system.process.linux.io_syscw[{#PROCESSNAME},io_syscw]</key>
+                            <delay>3m</delay>
+                            <description>Number of write I/O operations</description>
+                            <applications>
+                                <application>
+                                    <name>Linux Process IO</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Process - IO write_bytes: &quot;{#PROCESSNAME}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>system.process.linux.io_write_bytes[{#PROCESSNAME},io_write_bytes]</key>
+                            <delay>3m</delay>
+                            <history>30d</history>
+                            <units>B</units>
+                            <description>I/O counter: bytes written&#13;
+&#13;
+Attempt to count the number of bytes which this process caused to be sent to the storage layer. This is done at page-dirtying time.</description>
+                            <applications>
+                                <application>
+                                    <name>Linux Process IO</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Process - Resident memory : &quot;{#PROCESSNAME}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>system.process.linux.vmrss[{#PROCESSNAME},vmrss]</key>
+                            <delay>3m</delay>
+                            <history>30d</history>
+                            <units>B</units>
+                            <description>Amount of resident memory used by a process (Bytes)</description>
+                            <applications>
+                                <application>
+                                    <name>Linux Process Memory</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Process - Virtual memory : &quot;{#PROCESSNAME}&quot;</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>system.process.linux.vmsize[{#PROCESSNAME},vmsize]</key>
+                            <delay>3m</delay>
+                            <history>30d</history>
+                            <units>B</units>
+                            <description>Amount of virtual memory used by a process (Bytes)</description>
+                            <applications>
+                                <application>
+                                    <name>Linux Process Memory</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>Process &quot;{#PROCESSNAME}&quot; - CPU consumption</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template App Process Linux</host>
+                                        <key>system.process.linux.cpu[{#PROCESSNAME},cpu]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Process &quot;{#PROCESSNAME}&quot; - Memory consumption</name>
+                            <type>STACKED</type>
+                            <graph_items>
+                                <graph_item>
+                                    <color>C80000</color>
+                                    <item>
+                                        <host>Template App Process Linux</host>
+                                        <key>system.process.linux.vmrss[{#PROCESSNAME},vmrss]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>00C800</color>
+                                    <item>
+                                        <host>Template App Process Linux</host>
+                                        <key>system.process.linux.vmsize[{#PROCESSNAME},vmsize]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Process &quot;{#PROCESSNAME}&quot; - Number of bytes of I/O operations</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template App Process Linux</host>
+                                        <key>system.process.linux.io_read_bytes[{#PROCESSNAME},io_read_bytes]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template App Process Linux</host>
+                                        <key>system.process.linux.io_write_bytes[{#PROCESSNAME},io_write_bytes]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Process &quot;{#PROCESSNAME}&quot; - Number of I/O operations</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template App Process Linux</host>
+                                        <key>system.process.linux.io_syscr[{#PROCESSNAME},io_syscr]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template App Process Linux</host>
+                                        <key>system.process.linux.io_syscw[{#PROCESSNAME},io_syscw]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                    <lld_macro_paths>
+                        <lld_macro_path>
+                            <lld_macro>{#PROCESSNAME}</lld_macro>
+                            <path>$.PROCESSNAME</path>
+                        </lld_macro_path>
+                    </lld_macro_paths>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+</zabbix_export>

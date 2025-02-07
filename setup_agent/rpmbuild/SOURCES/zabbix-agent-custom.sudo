@@ -1,0 +1,39 @@
+# Autorisation de sudo sans TTY
+Defaults:zabbixcustom !requiretty
+
+# Commandes autorisées
+Cmnd_Alias ZABBIX_SERVICE       = /etc/init.d/zabbix-agent-custom, \
+                                  /sbin/service zabbix-agent-custom *, \
+                                  /usr/bin/systemctl * zabbix-agent-custom
+
+Cmnd_Alias ZABBIX_OTHER         = /bin/ls,\
+                                  /bin/netstat, \
+                                  /bin/sed, \
+                                  /bin/socat, \
+                                  /bin/su, \
+                                  /sbin/lsof, \
+                                  /sbin/multipath, \
+                                  /usr/bin/lsof, \
+                                  /usr/bin/rsync, \
+                                  /usr/sbin/httpd, \
+                                  /usr/sbin/lsof, \
+                                  /usr/sbin/drbdadm, \
+                                  /usr/bin/df, \
+                                  /usr/sbin/dmsetup, \
+                                  /bin/wget, \
+                                  /usr/bin/wget, \
+                                  /usr/sbin/dumpe2fs, \
+                                  /sbin/dumpe2fs, \
+                                  /usr/bin/nmap
+
+Cmnd_Alias ZABBIX_LVM           = /usr/sbin/lvs, \
+                                  /usr/sbin/vgs, \
+                                  /usr/sbin/pvs, \
+                                  /sbin/lvs, \
+                                  /sbin/vgs, \
+                                  /sbin/pvs
+
+
+# On autorise toutes les commandes
+zabbixIDS  ALL = (ALL) NOPASSWD: ZABBIX_SERVICE, NOPASSWD: ZABBIX_OTHER, NOPASSWD: ZABBIX_LVM
+

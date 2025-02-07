@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2019-11-25T15:30:59Z</date>
+    <groups>
+        <group>
+            <name>Templates/Applications</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template App Process Windows</template>
+            <name>Template App Process Windows</name>
+            <description>Monitoring of specific processes (CPU, memory)</description>
+            <groups>
+                <group>
+                    <name>Templates/Applications</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Windows Process CPU</name>
+                </application>
+                <application>
+                    <name>Windows Process I/O</name>
+                </application>
+                <application>
+                    <name>Windows Process Memory</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Windows Process Discovery</name>
+                    <key>system.process.windows.discovery</key>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>CPU utilization percentage of {#PROCESSNAME}</name>
+                            <key>perf_counter[\Process({#PROCESSNAME})\% Processor Time]</key>
+                            <value_type>FLOAT</value_type>
+                            <units>%</units>
+                            <applications>
+                                <application>
+                                    <name>Windows Process CPU</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Number of bytes read during I/O operations by process {#PROCESSNAME}</name>
+                            <key>proc_info[{#PROCESSNAME}.exe,io_read_b,avg]</key>
+                            <value_type>FLOAT</value_type>
+                            <units>B</units>
+                            <applications>
+                                <application>
+                                    <name>Windows Process I/O</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Number of read operation performed by process {#PROCESSNAME}</name>
+                            <key>proc_info[{#PROCESSNAME}.exe,io_read_op,avg]</key>
+                            <value_type>FLOAT</value_type>
+                            <applications>
+                                <application>
+                                    <name>Windows Process I/O</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Number of bytes written by process during I/O operations {#PROCESSNAME}</name>
+                            <key>proc_info[{#PROCESSNAME}.exe,io_write_b,avg]</key>
+                            <value_type>FLOAT</value_type>
+                            <units>B</units>
+                            <applications>
+                                <application>
+                                    <name>Windows Process I/O</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Number of write operation performed by process {#PROCESSNAME}</name>
+                            <key>proc_info[{#PROCESSNAME}.exe,io_write_op,avg]</key>
+                            <value_type>FLOAT</value_type>
+                            <applications>
+                                <application>
+                                    <name>Windows Process I/O</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>SIMPLE_CHANGE</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Total amount of memory used by process {#PROCESSNAME}</name>
+                            <key>proc_info[{#PROCESSNAME}.exe,wkset,sum]</key>
+                            <units>B</units>
+                            <applications>
+                                <application>
+                                    <name>Windows Process Memory</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>CPU usage of {#PROCESSNAME}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template App Process Windows</host>
+                                        <key>perf_counter[\Process({#PROCESSNAME})\% Processor Time]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Memory usage of {#PROCESSNAME}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template App Process Windows</host>
+                                        <key>proc_info[{#PROCESSNAME}.exe,wkset,sum]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Number of bytes during I/O operations by process {#PROCESSNAME}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template App Process Windows</host>
+                                        <key>proc_info[{#PROCESSNAME}.exe,io_read_b,avg]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>2774A4</color>
+                                    <item>
+                                        <host>Template App Process Windows</host>
+                                        <key>proc_info[{#PROCESSNAME}.exe,io_write_b,avg]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <name>Number of operation performed by process {#PROCESSNAME}</name>
+                            <type>STACKED</type>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template App Process Windows</host>
+                                        <key>proc_info[{#PROCESSNAME}.exe,io_read_op,avg]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template App Process Windows</host>
+                                        <key>proc_info[{#PROCESSNAME}.exe,io_write_op,avg]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                    <lld_macro_paths>
+                        <lld_macro_path>
+                            <lld_macro>{#PROCESSNAME}</lld_macro>
+                            <path>$.PROCESSNAME</path>
+                        </lld_macro_path>
+                    </lld_macro_paths>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+</zabbix_export>
